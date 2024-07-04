@@ -3,11 +3,14 @@ name: Generate OpenAPI pages
 on:
   push:
     paths:
-      - 'openapi-specs/**'
+      - "openapi-specs/**"
 
 jobs:
   run-scraping:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -19,9 +22,4 @@ jobs:
       - name: Run pnpx @mintlify/scraping
         run: pnpx @mintlify/scraping@latest openapi-file openapi-specs/openapi.documented.json -o api-reference
 
-    - name: Commit changes
-        run: |
-          git config --global user.name 'Your Name'
-          git config --global user.email 'your-username@users.noreply.github.com'
-          git commit -am "Automated report"
-          git push
+      - uses: stefanzweifel/git-auto-commit-action@v5
