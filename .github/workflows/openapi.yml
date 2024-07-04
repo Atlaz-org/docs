@@ -1,0 +1,27 @@
+name: Generate OpenAPI pages
+
+on:
+  push:
+    paths:
+      - 'openapi-specs/**'
+
+jobs:
+  run-scraping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+      - name: Run pnpx @mintlify/scraping
+        run: pnpx @mintlify/scraping@latest openapi-file openapi-specs/openapi.documented.json -o api-reference
+
+    - name: Commit changes
+        run: |
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your-username@users.noreply.github.com'
+          git commit -am "Automated report"
+          git push
