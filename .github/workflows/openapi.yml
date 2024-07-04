@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
 
-      - name: Run pnpx @mintlify/scraping
-        run: pnpx @mintlify/scraping@latest openapi-file openapi-specs/openapi.documented.json -o api-reference
+      - name: Run scraping
+        run: npx @mintlify/scraping@latest openapi-file openapi-specs/openapi.documented.json -o api-reference
 
       - uses: stefanzweifel/git-auto-commit-action@v5
